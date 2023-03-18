@@ -1,13 +1,10 @@
-name: Build
+name: Build and Test
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -18,3 +15,8 @@ jobs:
     - name: Restore packages
       run: msbuild MyApplication.csproj /t:Restore
 
+    - name: Build project
+      run: msbuild MyApplication.csproj /t:Build /p:Configuration=Release
+
+    - name: Run tests
+      run: dotnet test MyApplication.Tests.csproj
