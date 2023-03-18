@@ -16,7 +16,7 @@ jobs:
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Restore
      
     - name: Restore packages
-      run: nuget restore aspnet-get-started/aspnet-get-started.sln
+      run: nuget restore /aspnet-get-started.sln
 
     - name: Build project
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
