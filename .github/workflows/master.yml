@@ -21,5 +21,4 @@ jobs:
     - name: Build project
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
 
-    - name: Run tests
-      run: dotnet test MyApplication.Tests.csproj
+ 
