@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Restore NuGet packages
-        run: dotnet restore
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Build
-        run: dotnet build --configuration Release
+    - name: Restore packages
+      run: msbuild MyApplication.csproj /t:Restore
 
