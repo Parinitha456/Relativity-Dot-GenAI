@@ -13,10 +13,10 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Restore packages
-      run: msbuild MyApplication.csproj /t:Restore
+      run: msbuild aspnet-get-started.csproj /t:Restore
 
     - name: Build project
-      run: msbuild MyApplication.csproj /t:Build /p:Configuration=Release
+      run: msbuild aspnet-get-started.csproj /t:Build /p:Configuration=Release
 
     - name: Run tests
       run: dotnet test MyApplication.Tests.csproj
