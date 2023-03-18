@@ -28,4 +28,4 @@ jobs:
           dotnet-version: 'v17.0'
           
       - name: Build application
-        run: dotnet build ./aspnet-get-started
+        run: dotnet build ./aspnet-get-started.sln
