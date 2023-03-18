@@ -20,5 +20,17 @@ jobs:
 
     - name: Build project
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
+      
+    - name: Official SonarQube Scan
+        # You may pin to the exact commit or the version.
+        # uses: SonarSource/sonarqube-scan-action@a6ba0aafc293e03de5437af7edbc97f7d3ebc91a
+      uses: SonarSource/sonarqube-scan-action@v1.2.0
+      with:
+          # Additional arguments to the sonar-scanner
+        args: optional
+        project-key: starterdotnetgithubactions
+        project-name: starterdotnetgithubactions
+          # Set the sonar.projectBaseDir analysis property
+        projectBaseDir: .
 
  
