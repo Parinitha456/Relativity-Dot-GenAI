@@ -22,13 +22,12 @@ jobs:
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
       
     - name: SonarQube Scan
-      uses: https://github.com/SonarSource/sonar-scanner-cli-action@v1
+      uses: SonarSource/sonarqube-scan-action@v1
       with:
-        sonar-project-key: starterdotnetgithubactions
-        sonar-project-name: starterdotnetgithubactions
-        sonar-project-version: '1.0'
-        sonar-sources: '.'
-        sonar-host-url: 'http://20.205.44.55:9000/'
-        sonar-login: ${{ secrets.SONAR_TOKEN }}
+        projectBaseDir: .
+        projectName: 'starterdotnetgithubactions'
+        projectKey: 'starterdotnetgithubactions'
+        serverUrl: 'http://20.205.44.55:9000/'
+        token: ${{ secrets.SONAR_TOKEN }}
 
  
