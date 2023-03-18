@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 16.11.2+f32259642
 
       - name: Restore NuGet packages
         run: dotnet restore
