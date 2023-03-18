@@ -21,13 +21,17 @@ jobs:
     - name: Build project
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
       
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v1
+    - name: SonarQube Scanner-Windows
+      uses: jimseiwert/sonarqube-scanner-windows@v1.0
       with:
-        projectBaseDir: .
-        projectName: 'starterdotnetgithubactions'
-        projectKey: 'starterdotnetgithubactions'
-        serverUrl: 'http://20.205.44.55:9000/'
+        # URL to SonarQube
+        host-url: http://20.205.44.55:9000
+        # SonarQube token
         token: ${{ secrets.SONAR_TOKEN }}
+        # The name of the SonarQube project
+        project-key: starterdotnetgithubactions
+        # The name of the SonarQube project
+        project-name: starterdotnetgithubactions
+      
 
  
