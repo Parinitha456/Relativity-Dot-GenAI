@@ -1,31 +1,30 @@
-name: dotnet package
+name: Build
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '5.0.303' ]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-          
+          dotnet-version: 5.0.x
+
       - name: Restore NuGet packages
-        run: dotnet restore ./aspnet-get-started
-          
-      - name: Install dependencies
-        run: dotnet restore ./aspnet-get-started
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test --no-restore --verbosity normal
+
       
-      - uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '5.0.303'
-          
-      - name: Build application
-        run: dotnet build ./aspnet-get-started
