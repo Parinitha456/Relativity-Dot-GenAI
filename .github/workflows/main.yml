@@ -17,6 +17,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
           
+      - name: Restore NuGet packages
+        run: dotnet restore ./aspnet-get-started
+          
       - name: Install dependencies
         run: dotnet restore ./aspnet-get-started
       
