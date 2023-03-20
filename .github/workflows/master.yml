@@ -33,15 +33,4 @@ jobs:
         # The name of the SonarQube project
         project-name: starterdotnetgithubactions
     
-    - name: Login to Azure
-      uses: Azure/login@v1
-      with:
-        creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
-      
-    - name: Create ACR
-      id: create-acr
-      run: |
-        az acr create -n starter.netregistry -g github-rg --location "South Central US" --sku Standard --admin-enabled
-      
-
  
