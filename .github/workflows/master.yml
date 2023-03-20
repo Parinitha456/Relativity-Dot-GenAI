@@ -32,9 +32,6 @@ jobs:
         project-key: starterdotnetgithubactions
         # The name of the SonarQube project
         project-name: starterdotnetgithubactions
-        
-    - uses: pietrobolcato/install-azure-cli-action@v1
-        # now run any step that would require the `az` command line utility, eg:
     
     - name: Login to Azure
       uses: Azure/login@v1
