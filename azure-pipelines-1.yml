@@ -34,7 +34,7 @@ steps:
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)/src/MyProject/bin/$(buildConfiguration)/netcoreapp3.1'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/MyProject'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
