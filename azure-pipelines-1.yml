@@ -1,0 +1,52 @@
+# Here is an example Azure DevOps pipeline script that builds and tests ASP.NET projects using Visual Studio build task, publishes symbols, saves build artifacts, and deploys to Kubernetes:
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: PublishSymbols@2
+  inputs:
+    SearchPattern: '**/bin/**/*.pdb'
+    IndexSources: true
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/src/MyProject/bin/$(buildConfiguration)/netcoreapp3.1'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/MyProject'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/MyProject'
+    ArtifactName: 'MyProject'
+    publishLocation: 'Container'
+
+# - task: KubernetesManifest@0
+#   inputs:
+#     action: 'deploy'
+#     kubernetesServiceEndpoint: 'MyKubernetesServiceEndpoint'
+#     manifests: '$(Build.ArtifactStagingDirectory)/MyProject/kubernetes-manifests/*.yml'
+# ```
+
+# Note that you'll need to replace `MyProject` with the name of your project and `MyKubernetesServiceEndpoint` with the name of your Kubernetes service endpoint. You should also update the `netcoreapp3.1` value in the `SourceFolder` input to match your project's target framework.
