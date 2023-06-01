@@ -28,7 +28,7 @@ steps:
 - task: PublishSymbols@2
   inputs:
     SearchPattern: '**/bin/**/*.pdb'
-    IndexSources: true
+    SymbolServerType: 'TeamServices'
 
 - task: CopyFiles@2
   inputs:
