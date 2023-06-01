@@ -20,12 +20,12 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
 
-# - task: DotNetCoreCLI@2
-#   displayName: Build project
-#   inputs:
-#     command: 'build'
-#     projects: '**/*.csproj'
-#     arguments: '--configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Build project
+  inputs:
+    command: 'build'
+    projects: 'aspnet-get-started/aspnet-get-started.csproj'
+    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Run unit tests
