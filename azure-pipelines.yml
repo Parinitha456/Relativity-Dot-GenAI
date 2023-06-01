@@ -6,13 +6,13 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  dotnetVersion: '3.1.408'
+  dotnetVersion: '4.8'
 
 steps:
 - task: UseDotNet@2
   inputs:
-    version: $
-    packageType: sdk
+    packageType: 'sdk'
+    version: '2.x'
 
 - task: DotNetCoreCLI@2
   displayName: Restore NuGet packages
