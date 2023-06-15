@@ -2,6 +2,10 @@ name: Build and Test
 
 on: [push]
 
+env:
+  SONAR_TOKEN: '75621cba6337eff300a0b42e8d68eb9d4cdbe709'
+  SONAR_HOST_URL: 'http://brillioonesonar.eastus.cloudapp.azure.com:9000'
+
 jobs:
   build:
     runs-on: windows-latest
@@ -21,16 +25,33 @@ jobs:
     - name: Build project
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
       
-    - name: SonarQube Scanner-Windows
-      uses: jimseiwert/sonarqube-scanner-windows@v1.0
-      with:
-        # URL to SonarQube
-        host-url: http://20.205.44.55:9000
-        # SonarQube token
-        token: ${{ secrets.SONAR_TOKEN }}
-        # The name of the SonarQube project
-        project-key: starterdotnetgithubactions
-        # The name of the SonarQube project
-        project-name: starterdotnetgithubactions
+  sonarqube:
+    name: SonarQube Analysis
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v1.2.0
+        with:
+          SONAR_TOKEN: ${{env.SONAR_TOKEN }}
+          projectKey: ${{ env.sonar.projectKey }}
+          projectName: ${{ env.sonar.projectName }}
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+      
+#     - name: SonarQube Scanner-Windows
+#       uses: jimseiwert/sonarqube-scanner-windows@v1.0
+#       with:
+#         # URL to SonarQube
+#         host-url: http://20.205.44.55:9000
+#         # SonarQube token
+#         token: ${{ secrets.SONAR_TOKEN }}
+#         # The name of the SonarQube project
+#         project-key: starterdotnetgithubactions
+#         # The name of the SonarQube project
+#         project-name: starterdotnetgithubactions
     
  
