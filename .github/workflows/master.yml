@@ -32,14 +32,6 @@ jobs:
       run: |
         ls
         pwd
-        
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v1.2.0
-      with:
-        SONAR_TOKEN: ${{env.SONAR_TOKEN }}
-        projectKey: ${{ env.sonar.projectKey }}
-        projectName: ${{ env.sonar.projectName }}
-        SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
     
     - name: Publish Artifacts
       uses: azure/CLI@v1
@@ -47,4 +39,19 @@ jobs:
         azcliversion: latest
         inlineScript: |
           az storage blob upload-batch --destination github-artifacts --source ./ --connection-string ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+  sonarqube:
+    name: SonarQube Analysis
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v1.2.0
+        with:
+          SONAR_TOKEN: ${{env.SONAR_TOKEN }}
+          projectKey: ${{ env.sonar.projectKey }}
+          projectName: ${{ env.sonar.projectName }}
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
