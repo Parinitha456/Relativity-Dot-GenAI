@@ -27,34 +27,24 @@ jobs:
 
     - name: Build project
       run: msbuild aspnet-get-started/aspnet-get-started.csproj /t:Build /p:Configuration=Release
-      
-  sonarqube:
-    name: SonarQube Analysis
-    needs: build
-    runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Check Build Files
+      run: |
+        ls
+        pwd
+        
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v1.2.0
+      with:
+        SONAR_TOKEN: ${{env.SONAR_TOKEN }}
+        projectKey: ${{ env.sonar.projectKey }}
+        projectName: ${{ env.sonar.projectName }}
+        SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+    
+    - name: Publish Artifacts
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az storage blob upload-batch --destination github-artifacts --source ./ --connection-string ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v1.2.0
-        with:
-          SONAR_TOKEN: ${{env.SONAR_TOKEN }}
-          projectKey: ${{ env.sonar.projectKey }}
-          projectName: ${{ env.sonar.projectName }}
-          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-      
-#     - name: SonarQube Scanner-Windows
-#       uses: jimseiwert/sonarqube-scanner-windows@v1.0
-#       with:
-#         # URL to SonarQube
-#         host-url: http://20.205.44.55:9000
-#         # SonarQube token
-#         token: ${{ secrets.SONAR_TOKEN }}
-#         # The name of the SonarQube project
-#         project-key: starterdotnetgithubactions
-#         # The name of the SonarQube project
-#         project-name: starterdotnetgithubactions
-    
- 
