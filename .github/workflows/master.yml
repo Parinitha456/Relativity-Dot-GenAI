@@ -32,6 +32,8 @@ jobs:
       run: |
         ls
         pwd
+        cd aspnet-get-started
+        ls
     
     - name: Publish Artifacts
       uses: azure/CLI@v1
