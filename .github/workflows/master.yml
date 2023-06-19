@@ -1,6 +1,9 @@
 name: Build and Test
 
-on: [push]
+on:
+  push:
+    branches:
+      - manualTrigger
 
 env:
   SONAR_TOKEN: '75621cba6337eff300a0b42e8d68eb9d4cdbe709'
